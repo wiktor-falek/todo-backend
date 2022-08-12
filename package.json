@@ -5,7 +5,9 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon ."
+    "start": "NODE_ENV=production node .",
+    "dev": "nodemon .",
+    "db": "mongod"
   },
   "keywords": [],
   "author": "",
