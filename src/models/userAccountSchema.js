@@ -27,7 +27,6 @@ const userAccountSchema = new mongoose.Schema({
         type: String,
         default: null
     },
-
     confirmedEmail: {
         type: String,
         default: null,
