@@ -22,6 +22,10 @@ const userAccountSchema = new mongoose.Schema({
     registrationTimestamp: { 
         type: Number,
         required: true 
+    },
+    confirmedEmail: {
+        type: Boolean,
+        default: false
     }
 });
 
