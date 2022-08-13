@@ -41,8 +41,7 @@ router.post(
             }   
         )
         .catch(err => {
-            let errorData = parse(err);
-            res.status(400).json(errorData);
+            res.status(400).json(err);
         });
 });
 
