@@ -15,6 +15,8 @@
 
 - [ ] Logging middleware
 
+- [ ] Unique confirmed email
+
 - [ ] Generating confirmation link
 
 - [ ] Handling confirmation link

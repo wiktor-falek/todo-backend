@@ -20,6 +20,8 @@ router.post(
 
         const { username, password, email } = req.body;
 
+        // check if email doesnt already exist as confirmedEmail
+
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
         const hash = await bcrypt.hash(password, salt);
@@ -35,7 +37,7 @@ router.post(
             }
         })
 
-        user.save()
+        await user.save()
         .then(() => {
             res.status(200).json({ username, email });
             }   

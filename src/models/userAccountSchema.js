@@ -12,7 +12,6 @@ const userAccountSchema = new mongoose.Schema({
     email: { 
         type: String,
         required: true,
-        unique: true,
         minLength: 6,
         maxLength: 254
     },
@@ -26,12 +25,14 @@ const userAccountSchema = new mongoose.Schema({
     },
     sessionId: {
         type: String,
-        required: false,
+        default: null
     },
 
     confirmedEmail: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: null,
+        minLength: 6,
+        maxLength: 254
     }
 });
 
