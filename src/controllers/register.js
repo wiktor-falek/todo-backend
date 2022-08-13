@@ -52,10 +52,9 @@ router.post(
                 let param = keyPattern.split(".")[1];
                 let msg = `${param[0].toUpperCase()}${param.slice(1)} is already taken`;
 
-                res.status(400).json({
-                    "errors": [ { value, msg, param } ]
-                });
+                res.status(400).json({ value, msg, param });
             }
+
         });
 });
 
