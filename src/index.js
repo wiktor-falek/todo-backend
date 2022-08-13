@@ -39,8 +39,6 @@ mongoose.connect(mongoURI);
 // SERVER
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.table({ NODE_ENV, mongoURI, });
-    console.log("Auth Server is running");
-    console.log(`http://localhost:${PORT}`);
+    console.table({ NODE_ENV, mongoURI, URL: `http://localhost:${PORT}`});
 });
 
