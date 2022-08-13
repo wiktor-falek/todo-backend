@@ -8,3 +8,15 @@
 • Password reset
 
 • Account recovery
+
+
+
+## TODO
+
+- [ ] Logging middleware
+
+- [ ] Generating confirmation link
+
+- [ ] Handling confirmation link
+
+- [ ] Sending email

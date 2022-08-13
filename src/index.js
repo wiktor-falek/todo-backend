@@ -6,21 +6,25 @@ import { default as register } from "./controllers/register.js";
 import { default as login } from "./controllers/login.js";
 
 
+// INIT
+const app = express();
 const NODE_ENV = process.env.NODE_ENV === "production"? "production" : "development";
 
-const app = express();
 
+// MIDDLEWARE
 app.use(cors({
     origin: "*" // auth.gamename.com
 }));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
 // ROUTES
 app.use("/register", register);
+app.use("/login", login);
 
+
+// MONGOOSE INIT
 let mongoURI
 if (NODE_ENV === "production") {
     mongoURI = process.env.MONGO_URI;
@@ -31,8 +35,9 @@ else {
 
 mongoose.connect(mongoURI);
 
-const PORT = 3000;
 
+// SERVER
+const PORT = 3000;
 app.listen(PORT, () => {
     console.table({ NODE_ENV, mongoURI, });
     console.log("Auth Server is running");

@@ -1,4 +1,4 @@
-import { json, Router } from "express";
+import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 
@@ -9,9 +9,9 @@ const router = Router();
 
 router.post(
     "/", 
-    body('username').trim().isLength({ min: 6, max: 30 }),
-    body('password').isLength({ min: 8, max: 100 }),
-    body('email').isLength({ min: 6, max: 254 }).normalizeEmail(),
+    body('username').isString().trim().isLength({ min: 6, max: 30 }),
+    body('password').isString().isLength({ min: 8, max: 100 }),
+    body('email').isString().isLength({ min: 6, max: 254 }).normalizeEmail(),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -41,20 +41,8 @@ router.post(
             }   
         )
         .catch(err => {
-            let errJson = JSON.parse(JSON.stringify(err));
-            console.log(errJson);
-
-            if (errJson.code === 11000) {
-                // Duplicate Key Error
-                let keyPattern = Object.keys(errJson.keyPattern)[0];
-
-                let value = errJson.keyValue[keyPattern];
-                let param = keyPattern.split(".")[1];
-                let msg = `${param[0].toUpperCase()}${param.slice(1)} is already taken`;
-
-                res.status(400).json({ value, msg, param });
-            }
-
+            let errorData = parse(err);
+            res.status(400).json(errorData);
         });
 });
 

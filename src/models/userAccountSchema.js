@@ -23,6 +23,11 @@ const userAccountSchema = new mongoose.Schema({
         type: Number,
         required: true 
     },
+    sessionId: {
+        type: String,
+        required: false,
+    },
+
     confirmedEmail: {
         type: Boolean,
         default: false
