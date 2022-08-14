@@ -3,6 +3,7 @@ import { body, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 
 import { User } from "../models/User.js";
+import { encode } from "../utils/token.js";
 
 
 const router = Router();
@@ -34,25 +35,34 @@ router.post("/",
         const salt = await bcrypt.genSalt(saltRounds);
         const hash = await bcrypt.hash(password, salt);
 
-        const user = new User({
+        const newUser = new User({
             account: {
                 username: username,
                 hash: hash,
                 email: email,
                 registrationTimestamp: Math.floor(Date.now() / 1000)
             }
-        })
-
-        await user.save()
-        .then(() => {
-            res.status(200).json({ username, email });
-            }   
-        )
-        .catch(err => {
-            res.status(400).json(err);
         });
 
-        // generate token and send email
+        try {
+            await newUser.save()
+        }
+        catch {
+            return res.status(400).json({ error: "Username is taken" });
+        }
+
+        
+        const user = await User.findOne({ "account.username": username });
+        
+        // generate token
+        const id = user.id;
+        const registrationTimestamp = user.account.registrationTimestamp;
+        console.log(id, registrationTimestamp);
+        const token = encode(id, registrationTimestamp);
+
+        // send email
+
+        res.status(200).json({ username, email, token });
 });
 
 export default router;
