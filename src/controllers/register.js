@@ -20,14 +20,14 @@ router.post(
 
         const { username, password, email } = req.body;
 
-        // check if email doesnt already exist as confirmedEmail
+        // check if there is no user that has confirmed
+        // the email that we are trying to create account with
         const query = { "account.confirmedEmail": email };
         const userWithEmailTaken = await User.findOne(query).select("account");
 
         if (userWithEmailTaken) {
             res.status(400).json("Email is already in use");
         }
-
 
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
@@ -48,7 +48,6 @@ router.post(
             }   
         )
         .catch(err => {
-            console.log(err);
             res.status(400).json(err);
         });
 });
