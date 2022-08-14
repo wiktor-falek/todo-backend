@@ -1,5 +1,8 @@
 :root {
+    margin: 0;
     font-family: 'Courier New', Courier, monospace;
+    color: whitesmoke;
+    font-size: 24px;
 }
 
 body {
@@ -9,3 +12,27 @@ body {
 h1 {
     color: #337DFF;
 }
+
+.container {
+    box-sizing: content-box;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    height: 650px;
+    width: 450px;
+    background-color: rgb(40, 40, 40);
+}
+
+.card input {
+    display: flex;
+    font-size: 1rem;
+    height: 35px;
+    width: 90%;
+    margin: 15px auto;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+

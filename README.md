@@ -13,11 +13,7 @@
 
 ## TODO
 
-- [ ] Logging middleware
-
-- [ ] Unique confirmed email
-
-- [ ] Generating confirmation link
+- [ ] Generating confirmation token
 
 - [ ] Handling confirmation link
 

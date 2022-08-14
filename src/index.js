@@ -6,6 +6,7 @@ import expressWinston from "express-winston";
 
 import { default as register } from "./controllers/register.js";
 import { default as login } from "./controllers/login.js";
+import { default as verify } from "./controllers/verify.js";
 import makeDir from "./utils/makeDir.js";
 
 
@@ -36,6 +37,7 @@ app.use(expressWinston.logger({
 // ROUTES
 app.use("/register", register);
 app.use("/login", login);
+app.use("/verify", verify);
 
 app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "ico"] }));
 

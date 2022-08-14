@@ -7,8 +7,7 @@ import { User } from "../models/User.js";
 
 const router = Router();
 
-router.post(
-    "/", 
+router.post("/", 
     body('username').isString().trim().isLength({ min: 6, max: 30 }),
     body('password').isString().isLength({ min: 8, max: 100 }),
     body('email').isString().isLength({ min: 6, max: 254 }).normalizeEmail(),
@@ -52,6 +51,8 @@ router.post(
         .catch(err => {
             res.status(400).json(err);
         });
+
+        // generate token and send email
 });
 
 export default router;

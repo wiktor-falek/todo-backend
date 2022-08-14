@@ -8,8 +8,7 @@ import { User } from "../models/User.js";
 
 const router = Router();
 
-router.post(
-    "/", 
+router.post("/", 
     body('username').isString().trim().isLength({ min: 6, max: 30 }),
     body('password').isString().isLength({ min: 8, max: 100 }),
     async (req, res) => {
