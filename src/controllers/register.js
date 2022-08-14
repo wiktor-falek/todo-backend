@@ -57,7 +57,6 @@ router.post("/",
         // generate token
         const id = user.id;
         const registrationTimestamp = user.account.registrationTimestamp;
-        console.log(id, registrationTimestamp);
         const token = encode(id, registrationTimestamp);
 
         // send email
