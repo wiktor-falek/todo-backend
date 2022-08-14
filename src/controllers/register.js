@@ -13,6 +13,7 @@ router.post(
     body('password').isString().isLength({ min: 8, max: 100 }),
     body('email').isString().isLength({ min: 6, max: 254 }).normalizeEmail(),
     async (req, res) => {
+        console.log(req.body);
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -20,6 +21,7 @@ router.post(
 
         const { username, password, email } = req.body;
 
+        console.table({username, password, email})
         // check if there is no user that has confirmed
         // the email that we are trying to create account with
         const query = { "account.confirmedEmail": email };

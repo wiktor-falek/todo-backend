@@ -49,6 +49,7 @@ router.post(
         await user.save();
 
         res.status(200).json({ username, sessionId }); 
+        //res.redirect("https://game.com");
 });
 
 export default router;

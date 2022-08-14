@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import winston from "winston";
+import expressWinston from "express-winston";
 
 import { default as register } from "./controllers/register.js";
 import { default as login } from "./controllers/login.js";
@@ -13,11 +15,22 @@ const NODE_ENV = process.env.NODE_ENV === "production"? "production" : "developm
 
 
 // MIDDLEWARE
-app.use(cors({
-    origin: "*" // auth.gamename.com
-}));
-app.use(express.urlencoded({ extended: true }));
+//app.use(cors({
+//    origin: "*" // auth.gamename.com
+//}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(expressWinston.logger({
+    transports: [
+      new winston.transports.Console()
+    ],
+    meta: false,
+    msg: "HTTP  ",
+    expressFormat: true,
+    colorize: false,
+    level: "info",
+    ignoreRoute: function (req, res) { return false; }
+}));
 
 
 // ROUTES
