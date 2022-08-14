@@ -3,14 +3,9 @@ import { body, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 
 import { User } from "../models/User.js";
-import makeDir from "../utils/makeDir.js";
 
 
 const router = Router();
-
-router.get("/", (req, res) => {
-    res.status(200).sendFile(makeDir("../views/register.html"));
-})
 
 router.post(
     "/", 

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 import { default as register } from "./controllers/register.js";
 import { default as login } from "./controllers/login.js";
+import makeDir from "./utils/makeDir.js";
 
 
 // INIT
@@ -22,6 +23,8 @@ app.use(express.json());
 // ROUTES
 app.use("/register", register);
 app.use("/login", login);
+
+app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "ico"] }));
 
 
 // MONGOOSE INIT
