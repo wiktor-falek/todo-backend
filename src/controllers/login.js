@@ -47,7 +47,7 @@ router.post("/",
                 maxAge: cookieMaxAge,
             })
             res.status(200).json({ username, sessionId }); 
-            //res.redirect("https://game.com");
+            //res.redirect(`https://game.com/`);
         })
 
 

@@ -44,7 +44,7 @@ app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "cs
 
 
 // MONGOOSE INIT
-let mongoURI
+let mongoURI;
 if (NODE_ENV === "production") {
     mongoURI = process.env.MONGO_URI;
 }

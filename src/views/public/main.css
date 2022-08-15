@@ -23,16 +23,29 @@ h1 {
     height: 650px;
     width: 450px;
     background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card h1 {
+    text-align: center;
 }
 
 .card input {
     display: flex;
     font-size: 1rem;
     height: 35px;
-    width: 90%;
-    margin: 15px auto;
-    padding: 0;
-    box-sizing: content-box;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    justify-content: center;
 }
+
+.card input {
+    margin-bottom: 40px;
+}
+
+
 
 
