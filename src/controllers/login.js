@@ -37,18 +37,20 @@ router.post("/",
         user.account.sessionId = uuidv4();
         const sessionId = user.account.sessionId;
 
-        const cookieMaxAge = 2629800 // 1 month
-        res.cookie("username", username, {
-            maxAge: cookieMaxAge,
-        })
-        res.cookie("sessionId", sessionId, {
-            maxAge: cookieMaxAge,
+        await user.save()
+        .then(() => {
+            const cookieMaxAge = 2629800 // 1 month
+            res.cookie("username", username, {
+                maxAge: cookieMaxAge,
+            })
+            res.cookie("sessionId", sessionId, {
+                maxAge: cookieMaxAge,
+            })
+            res.status(200).json({ username, sessionId }); 
+            //res.redirect("https://game.com");
         })
 
-        await user.save();
 
-        res.status(200).json({ username, sessionId }); 
-        //res.redirect("https://game.com");
 });
 
 export default router;
