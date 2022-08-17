@@ -8,14 +8,14 @@ import { User } from "../models/User.js";
 
 const router = Router();
 
-router.post("/", 
+router.post("/",
     body('username').isString().trim().isLength({ min: 6, max: 30 }),
     body('password').isString().isLength({ min: 8, max: 100 }),
     async (req, res) => {
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
-        } 
+        }
 
         const { username, password } = req.body;
 
@@ -46,11 +46,9 @@ router.post("/",
             res.cookie("sessionId", sessionId, {
                 maxAge: cookieMaxAge,
             })
-            res.status(200).json({ username, sessionId }); 
+            res.status(200).json({ username, sessionId });
             //res.redirect(`https://game.com/`);
         })
-
-
 });
 
 export default router;

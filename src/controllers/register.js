@@ -4,11 +4,11 @@ import bcrypt from "bcrypt";
 
 import { User } from "../models/User.js";
 import { encode } from "../utils/token.js";
-
+import { sendConfirmationEmail } from "../components/email.js";
 
 const router = Router();
 
-router.post("/", 
+router.post("/",
     body('username').isString().trim().isLength({ min: 6, max: 30 }),
     body('password').isString().isLength({ min: 8, max: 100 }),
     body('email').isString().isLength({ min: 6, max: 254 }).normalizeEmail(),
@@ -17,7 +17,7 @@ router.post("/",
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
-        } 
+        }
 
         const { username, password, email } = req.body;
 
@@ -28,7 +28,7 @@ router.post("/",
         const userWithEmailTaken = await User.findOne(query).select("account");
 
         if (userWithEmailTaken) {
-            res.status(400).json("Email is already in use");
+            return res.status(400).json("Email is already in use");
         }
 
         const saltRounds = 10;
@@ -51,7 +51,6 @@ router.post("/",
             return res.status(400).json({ error: "Username is taken" });
         }
 
-        
         const user = await User.findOne({ "account.username": username });
         
         // generate token
@@ -60,6 +59,12 @@ router.post("/",
         const token = encode(id, registrationTimestamp);
 
         // send email
+        sendConfirmationEmail(
+            email,
+            'Please confirm your email address',
+            `Hi ${username}, Click here to confirm your email address and activate your account\n` +
+            `http://localhost:3000/verify/${token}`
+        );
 
         res.status(200).json({ username, email, token });
 });

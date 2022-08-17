@@ -17,7 +17,7 @@ export const encode = (id, registrationTimestamp) => {
 
 /**
  * returns decoded jwt token data
- * @param {String} token 
+ * @param {String} token
  * @returns {Object}
  */
 export const decode = (token) => {
