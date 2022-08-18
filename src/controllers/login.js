@@ -56,6 +56,7 @@ router.post("/",
             res.cookie("sessionId", sessionId, {
                 maxAge: cookieMaxAge,
             })
+            console.log({username, sessionId})
             res.status(200).json({ username, sessionId });
         })
 });

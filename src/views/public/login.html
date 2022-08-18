@@ -6,29 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="./main.css">
+    <script src="loginForm.js" defer></script>
 </head>
 <body>
     <div class="container">
         <div class="card">
             <h1>Login</h1>
             
-            <form action="/login" method="post" id="auth-form">
-                <label for="username">Username</label>
+            <form action="/login" method="post" id="auth-form--login">
+                <label for="username">
+                    Username
+                    <strong class="error"></strong>
+                </label>
                 <input type="text" id="username" name="username" 
-                required minlength="6" maxlength="30">
-                
-                <label for="password">Password</label>
+                required minlength="6" maxlength="30"
+                aria-invalid="true" aria-describedby="error">
+
+                <label for="password">
+                    Password
+                    <strong class="error"></strong>
+                </label>
                 <input type="password" id="password" name="password" 
-                required minlength="8" maxlength="100">
+                required minlength="8" maxlength="100"
+                aria-invalid="true" aria-describedby="error">
 
                 <a href="/register">Don't have an account?</a>
-                
             </form>
             
-            <input type="submit" value="Log in" form="auth-form">
+            <input type="submit" value="Log in" form="auth-form--login">
         </div>
     </div>
-
-    <script src="form.js"></script>
 </body>
 </html>

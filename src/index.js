@@ -42,6 +42,10 @@ app.use("/verify", verify);
 
 app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "js", "ico"] }));
 
+app.use("*", (req, res) => {
+    res.redirect("/login");
+});
+
 
 // MONGOOSE INIT
 let mongoURI;

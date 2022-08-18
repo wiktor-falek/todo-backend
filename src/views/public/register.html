@@ -6,32 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="./main.css">
+    <script src="registerForm.js" defer></script>
 </head>
 <body>
     <div class="container">
         <div class="card">
             <h1>Register</h1>
             
-            <form action="/register" method="post" id="auth-form">
-                <label for="username">Username</label>
+            <form action="/register" method="post" id="auth-form--register">
+                <label for="username">
+                    Username
+                    <strong class="error"></strong>
+                </label>
                 <input type="text" id="username" name="username" 
-                required minlength="6" maxlength="30">
-                
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" 
-                required minlength="8" maxlength="100">
+                required minlength="6" maxlength="30"
+                aria-invalid="true" aria-describedby="error">
 
-                <label for="email">Email</label>
+                <label for="email">
+                    Email
+                    <strong class="error"></strong>
+                </label>
                 <input type="email" id="email" name="email"
-                required minlength="6" maxlength="254">
+                required minlength="6" maxlength="254"
+                aria-invalid="true" aria-describedby="error">
+
+                <label for="password">
+                    Password
+                    <strong class="error"></strong>
+                </label>
+                <input type="password" id="password" name="password" 
+                required minlength="8" maxlength="100"
+                aria-invalid="true" aria-describedby="error">
+
+                <label for="password-confirm">
+                    Confirm Password
+                    <strong class="error"></strong>
+                </label>
+                <input type="password" id="password-confirm" 
+                required minlength="8" maxlength="100"
+                aria-invalid="true" aria-describedby="error">
 
                 <a href="/login">Already got an account?</a>
                 
             </form>
 
-            <input type="submit" value="Register" form="auth-form">
+            <input type="submit" value="Register" form="auth-form--register">
         </div>
     </div>
-    <script src="form.js"></script>
 </body>
 </html>
