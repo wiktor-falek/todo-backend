@@ -72,7 +72,7 @@ router.post("/",
             `http://localhost:3000/verify/${token}` 
         );
 
-        res.status(200).json({ username, email, token }); //TODO: remove token in prod
+        res.status(200).json({ username, email });
 });
 
 export default router;
