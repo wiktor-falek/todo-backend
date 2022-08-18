@@ -28,32 +28,32 @@ router.get("/:token",
         }
         catch(err){
             console.log(err)
-            return res.status(400).json({ error: "invalid token" })
+            return res.status(400).json({ message: "Invalid token" })
         }
         
+        // probably unnecessary but can never be sure
         if (tokenData === undefined || tokenData === null) {
-            return res.status(400).json({ error: "invalid token" });
+            return res.status(400).json({ message: "Invalid token" });
         }
 
         let { id, registrationTimestamp } = tokenData;
+
         const query = { 
             "account.registrationTimestamp": registrationTimestamp,
             "_id": id
         };
         const user = await User.findOne(query).select("account");
-        
-        console.log(user);
 
         if (user.account.confirmedEmail !== null) {
             // if user already confirmed email;
-            return res.status(400).json({ error: "email is already verified" });
+            return res.status(400).json({ message: "Email is already verified" });
         }
         // confirm email
         user.account.confirmedEmail = user.account.email;
 
         await user.save();
 
-        res.status(200).json(tokenData);
+        res.status(200).send("Your email has been confirmed");
 })
 
 export default router;

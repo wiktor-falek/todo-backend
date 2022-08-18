@@ -9,8 +9,8 @@ formElement.addEventListener("submit", (e) => {
     .then(res => res.json())
     .then(res => {
         if (!res.success) {
-            return alert(JSON.stringify(res))
+            return alert(JSON.stringify(res));
         }
-        alert(JSON.stringify(res.data))
+        alert(JSON.stringify(res.data));
     })
 })
