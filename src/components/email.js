@@ -11,11 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendConfirmationEmail = (to, subject, text) => {
-    let mailOptions = {
-        to: to,
-        subject: subject,
-        text: text
-    }
+    let mailOptions = { to, subject, text };
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.log(err);

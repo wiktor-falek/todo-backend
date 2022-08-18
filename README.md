@@ -1,20 +1,8 @@
 ## Auth Server (HTTPS)
-• Registration
+- [x] Registration
 
-• Token Generation
+- [x] Email confirmation
 
-• Send emails
+- [ ] Password reset
 
-• Password reset
-
-• Account recovery
-
-
-
-## TODO
-
-- [ ] Generating confirmation token
-
-- [ ] Handling confirmation link
-
-- [ ] Sending email
+- [ ] Account recovery

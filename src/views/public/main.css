@@ -1,5 +1,5 @@
 :root {
-    --font-color:whitesmoke;
+    --font-color:#E2DFDB;
     --secondary-font-color: #337DFF;
     font-size: 24px;
     font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -8,11 +8,8 @@
 body {
     color: var(--font-color);
     font-family: 'Courier New', Courier, monospace;
+    background-color: rgb(15, 16, 17); 
     margin: 0;
-}
-
-body {
-    background-color: rgb(20, 20, 20);
 }
 
 h1 {
@@ -30,9 +27,11 @@ a:hover {
 }
 
 .container {
+    height: 100vh;
     box-sizing: content-box;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .card {
@@ -40,7 +39,7 @@ a:hover {
     flex-direction: column;
     height: 650px;
     width: 450px;
-    background-color: #202122;
+    background-color: #191B1C;
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
@@ -59,8 +58,8 @@ input {
     margin-top: 10px;
     margin-bottom: 35px;
     border-radius: 5px;
-    border: 2px solid rgb(114, 114, 114);
-    background-color: rgb(45, 45, 45);
+    border: 2px solid #776E62;
+    background-color: #222526;
 }
 
 input:nth-last-child(2) {
