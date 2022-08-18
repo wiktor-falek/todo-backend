@@ -16,19 +16,22 @@ router.post("/",
         console.log(req.body);
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(200).json({ errors: errors.array() });
         }
 
         const { username, password, email } = req.body;
 
-        console.table({username, password, email})
-        // check if there is no user that has confirmed
-        // the email that we are trying to create account with
+        console.table({ username, password, email });
+
+        // check if there is no user that already has confirmed this email
         const query = { "account.confirmedEmail": email };
         const userWithEmailTaken = await User.findOne(query).select("account");
 
         if (userWithEmailTaken) {
-            return res.status(400).json("Email is already in use");
+            return res.status(400).json({
+                param: "email",
+                message: "Email is already in use"
+            });
         }
 
         const saltRounds = 10;
@@ -48,7 +51,10 @@ router.post("/",
             await newUser.save()
         }
         catch {
-            return res.status(400).json({ error: "Username is taken" });
+            return res.status(400).json({
+                param: "username",
+                message: "Username is taken"
+            });
         }
 
         const user = await User.findOne({ "account.username": username });
@@ -63,10 +69,10 @@ router.post("/",
             email,
             'Please confirm your email address',
             `Hi ${username}, Click here to confirm your email address and activate your account\n` +
-            `http://localhost:3000/verify/${token}`
+            `http://localhost:3000/verify/${token}` 
         );
 
-        res.status(200).json({ username, email, token });
+        res.status(200).json({ username, email, token }); //TODO: remove token in prod
 });
 
 export default router;

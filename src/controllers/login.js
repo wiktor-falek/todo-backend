@@ -14,7 +14,7 @@ router.post("/",
     async (req, res) => {
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(200).json({ errors: errors.array() });
         }
 
         const { username, password } = req.body;
@@ -24,14 +24,24 @@ router.post("/",
         const user = await User.findOne(query).select("account");
 
         if (user === null) {
-            return res.status(400).json({ error: "Invalid username" });
+            return res.status(401).json(
+                {
+                    param: "username",
+                    message: "Invalid username"
+                }
+            );
         }
 
         const hash = user.account.hash;
         const authenticated = await bcrypt.compare(password, hash);
 
         if (!authenticated) {
-            return res.status(400).json({ error: "Invalid password" });
+            return res.status(401).json(
+                {
+                    param: "password",
+                    message: "Invalid password"
+                }
+            );
         }
 
         user.account.sessionId = uuidv4();
@@ -47,7 +57,6 @@ router.post("/",
                 maxAge: cookieMaxAge,
             })
             res.status(200).json({ username, sessionId });
-            //res.redirect(`https://game.com/`);
         })
 });
 

@@ -40,7 +40,7 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/verify", verify);
 
-app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "ico"] }));
+app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "js", "ico"] }));
 
 
 // MONGOOSE INIT
