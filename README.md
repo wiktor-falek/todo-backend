@@ -6,12 +6,3 @@
 - [ ] Password reset
 
 - [ ] Account recovery
-
-
-{
-    status: "success",
-    data: {
-        username: ,
-        sessionId: 
-    }
-}

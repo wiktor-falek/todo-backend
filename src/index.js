@@ -61,7 +61,7 @@ if (NODE_ENV === "production") {
     mongoURI = process.env.MONGO_URI;
 }
 else {
-    mongoURI = "mongodb://127.0.0.1:27017/game";
+    mongoURI = "mongodb://127.0.0.1:27017/todo";
 }
 
 mongoose.connect(mongoURI);
