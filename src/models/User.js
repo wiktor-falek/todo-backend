@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-import userAccountSchema from "./userAccountSchema.js";
-import todoSchema from "./todoSchema.js";
+import accountSchema from "./accountSchema.js";
+import { todoSchema } from "./Todo.js";
 
 
 const userSchema = new mongoose.Schema({
-    account: userAccountSchema,
+    account: accountSchema,
     todos: [todoSchema]
 });
 

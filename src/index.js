@@ -1,17 +1,17 @@
 import express from "express";
 import mongoose from "mongoose";
 import winston from "winston";
-import expressWinston from "express-winston";
+import expressWinston, { logger } from "express-winston";
 import cookieParser from "cookie-parser";
 
-import { default as register } from "./controllers/register.js";
-import { default as login } from "./controllers/login.js";
-import { default as verify } from "./controllers/verify.js";
-import { apiLimiter } from "./utils/rateLimit.js";
-import makeDir from "./utils/makeDir.js";
-import authorize from "./components/authorize.js";
-import dashboard from "./controllers/dashboard.js";
+import { default as register } from "./controllers/auth/register.js"
+import { default as login } from "./controllers/auth/login.js"
+import { default as verify } from "./controllers/auth/verify.js"
+import { default as v1 } from "./controllers/v1/v1.js";
 
+import { authApiLimiter } from "./utils/rateLimit.js";
+import makeDir from "./utils/makeDir.js";
+import authorize from "./middleware/authorize.js";
 
 // INIT
 const app = express();
@@ -33,27 +33,21 @@ app.use(expressWinston.logger({
     level: "info",
     ignoreRoute: function (req, res) { return false; }
 }));
-
-app.use("/login", apiLimiter);
-app.use("/register", apiLimiter);
-app.use("/verify", apiLimiter);
-
-
-// ROUTES
-app.use("/register", register);
-app.use("/login", login);
-app.use("/verify", verify);
-
-app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "js", "ico"] }));
-
-// PROTECTED ROUTES
-app.use("/dashboard", authorize, dashboard);
-
-// DEFAULT
-app.use("*", (req, res) => {
-    res.redirect("/");
+app.use((req, res, next) => {
+    // logs params from request body if not empty
+    const params = JSON.parse(JSON.stringify(req.body));
+    next();
+    if (Object.keys(params).length) {
+        console.log(params);
+    }
 });
 
+// RATE LIMITERS
+app.use("/auth", authApiLimiter);
+
+// ROUTES
+app.use("/auth", register, login, verify);
+app.use("/api", authorize, v1);
 
 // MONGOOSE INIT
 let mongoURI;
@@ -62,6 +56,9 @@ if (NODE_ENV === "production") {
 }
 else {
     mongoURI = "mongodb://127.0.0.1:27017/todo";
+
+    // routes for local testing purposes
+    app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "js", "ico"] }));
 }
 
 mongoose.connect(mongoURI);
