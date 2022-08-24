@@ -2,12 +2,15 @@ import express from "express";
 import mongoose from "mongoose";
 import winston from "winston";
 import expressWinston from "express-winston";
+import cookieParser from "cookie-parser";
 
 import { default as register } from "./controllers/register.js";
 import { default as login } from "./controllers/login.js";
 import { default as verify } from "./controllers/verify.js";
 import { apiLimiter } from "./utils/rateLimit.js";
 import makeDir from "./utils/makeDir.js";
+import authorize from "./components/authorize.js";
+import dashboard from "./controllers/dashboard.js";
 
 
 // INIT
@@ -18,6 +21,7 @@ const NODE_ENV = process.env.NODE_ENV === "production"? "production" : "developm
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(expressWinston.logger({
     transports: [
       new winston.transports.Console()
@@ -42,8 +46,12 @@ app.use("/verify", verify);
 
 app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "js", "ico"] }));
 
+// PROTECTED ROUTES
+app.use("/dashboard", authorize, dashboard);
+
+// DEFAULT
 app.use("*", (req, res) => {
-    res.redirect("/login");
+    res.redirect("/");
 });
 
 

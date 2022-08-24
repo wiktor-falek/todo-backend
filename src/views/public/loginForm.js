@@ -18,8 +18,9 @@ loginFormElement.addEventListener("submit", (e) => {
             if (errorElement !== undefined && errorElement !== null) {
                 errorElement.innerHTML = res.body.message || "";
             }
-            return
-        } 
-        window.location.href = "http://www.google.com";
+            return;
+        }
+        
+        window.location.href = "/dashboard";
     })
 })
