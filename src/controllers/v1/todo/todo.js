@@ -3,11 +3,9 @@ import { body, validationResult } from "express-validator";
 
 import { User } from "../../../models/User.js";
 import { Todo } from "../../../models/Todo.js";
-import { decode } from "../../../utils/token.js";
 
 
 const router = Router();
-
 
 // Responds with an array of todos of the user
 router.get("/todo", 
@@ -24,7 +22,7 @@ router.get("/todo",
 
     const todos = user.todos;
     res.json({ todos });
-})
+});
 
 // Responds with an todo of the user that matches the id
 router.get("/todo/:id", 
@@ -46,7 +44,7 @@ router.get("/todo/:id",
             return res.status(400).json({ error: "todo not found" });
         }
         res.json({ result });
-})
+});
 
 /**
  * appends a todo to todos for an user
@@ -85,7 +83,7 @@ router.post("/todo",
             });
         }
         res.status(200).json(todo);
-})
+});
 
 // Replaces a todo at id
 router.put("/todo",     
@@ -95,7 +93,7 @@ router.put("/todo",
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(200).json({ errors: errors.array() });
+            return res.status(400).json({ errors: errors.array() });
         }
 
         const { username, sessionId, userId } = res.locals; // auth data
@@ -118,11 +116,39 @@ router.put("/todo",
         }).catch(err => {
             res.status(400).json({err});
         })
-})
+});
 
 // Modifies a todo at id
 router.patch("/todo", (req, res) => {
-    
-})
+    return res.status(501); // Not Implemented
+});
+
+router.delete("/todo/:id", async (req, res) => {
+    const id = req.params.id;
+    if (id === undefined || id == null) {
+        return res.status(40).json({ error: "id not specified" });
+    }
+
+    const { username, sessionId, userId } = res.locals; // auth data
+
+    const fields = { "todos": { id: id } };
+
+    const query = { "account.username" : username, "account.sessionId": sessionId };
+    await User.updateOne(
+        { _id: userId },
+        { $pull: { todos: { id: id} } },
+    )
+    .then((raw) => {
+        console.log(raw)
+        if (raw.modifiedCount) {
+           return res.status(200).json({ status: `deleted todo at id ${id}` });
+        }
+        return res.status(404).json( { error: `todo at id ${id} does not exist` } );
+    })
+    .catch((err) => {
+        res.status(400).json({ error: `todo with id was ${id} not found`});
+    })
+
+});
 
 export default router;
