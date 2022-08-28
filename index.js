@@ -4,14 +4,14 @@ import winston from "winston";
 import expressWinston, { logger } from "express-winston";
 import cookieParser from "cookie-parser";
 
-import { default as register } from "./controllers/auth/register.js"
-import { default as login } from "./controllers/auth/login.js"
-import { default as verify } from "./controllers/auth/verify.js"
-import { default as v1 } from "./controllers/v1/v1.js";
+import { default as register } from "./src/controllers/auth/register.js"
+import { default as login } from "./src/controllers/auth/login.js"
+import { default as verify } from "./src/controllers/auth/verify.js"
+import { default as v1 } from "./src/controllers/v1/v1.js";
 
-import { authApiLimiter } from "./utils/rateLimit.js";
-import makeDir from "./utils/makeDir.js";
-import authorize from "./middleware/authorize.js";
+import { authApiLimiter } from "./src/utils/rateLimit.js";
+import makeDir from "./src/utils/makeDir.js";
+import authorize from "./src/middleware/authorize.js";
 
 // INIT
 const app = express();
@@ -34,11 +34,19 @@ app.use(expressWinston.logger({
     ignoreRoute: function (req, res) { return false; }
 }));
 app.use((req, res, next) => {
-    // logs params from request body if not empty
+    // logs params from request body if not empty, omitting blacklistedKeys
+    const blacklistedKeys = ["password",];
+
     const params = JSON.parse(JSON.stringify(req.body));
     next();
     if (Object.keys(params).length) {
-        console.log(params);
+        const data = Object.assign(params);
+        blacklistedKeys.forEach((key) => {
+            if (key in data) {
+                data[key] = "[REDACTED]";
+            }
+        })
+        console.log({ params: data });
     }
 });
 

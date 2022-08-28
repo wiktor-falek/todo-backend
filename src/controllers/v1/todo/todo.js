@@ -48,7 +48,12 @@ router.get("/todo/:id",
         res.json({ result });
 })
 
-// Creates a new todo
+/**
+ * appends a todo to todos for an user
+ * queried by cookie sessionId and username
+ * @field {string} title - title of the todo
+ * @field {string} body - content of the todo
+ */
 router.post("/todo", 
     body('id').notEmpty().isString(),
     body('title').notEmpty().isString().isLength({ max: 50 }),
@@ -67,7 +72,7 @@ router.post("/todo",
 
         console.log(user);
         
-        const todo = new Todo({ id, title, body });
+        const todo = new Todo({ id: id, title, body });
         user.todos.push(todo);
         
         try {
@@ -83,8 +88,36 @@ router.post("/todo",
 })
 
 // Replaces a todo at id
-router.put("/todo", (req, res) => {
-    
+router.put("/todo",     
+    body('id').notEmpty().isString(),
+    body('title').notEmpty().isString().isLength({ max: 50 }),
+    body('body').notEmpty().isString().isLength({ max: 500 }),
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(200).json({ errors: errors.array() });
+        }
+
+        const { username, sessionId, userId } = res.locals; // auth data
+        const { id, title, body } = req.body; // todo data
+
+        const newTodo = new Todo({ id: id, title, body });
+
+        const query = { "account.username" : username, "account.sessionId": sessionId };
+        const fields = { "todos": { id: id } };
+        User.findOneAndUpdate(
+            { "_id": userId, "todos.id": id },
+            { 
+                "$set": {
+                    "todos.$": newTodo
+                }
+            },
+        )
+        .then(user => {
+            res.status(200).json(newTodo)
+        }).catch(err => {
+            res.status(400).json({err});
+        })
 })
 
 // Modifies a todo at id

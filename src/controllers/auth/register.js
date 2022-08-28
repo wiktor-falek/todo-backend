@@ -20,8 +20,6 @@ router.post("/register",
 
         const { username, password, email } = req.body;
 
-        console.table({ username, password, email });
-
         // check if there is no user that already has confirmed this email
         const query = { "account.confirmedEmail": email };
         const userWithEmailTaken = await User.findOne(query).select("account");
