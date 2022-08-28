@@ -12,7 +12,7 @@ router.get("/verify", (req, res) => {
     res.status(200).json({ "where": "token" });
 })
 
-router.get("/:token", 
+router.get("/verify/:token", 
     param("token").isString().isLength({ min: 3 }),
     async (req, res) => {
         const errors = validationResult(req);
@@ -38,16 +38,20 @@ router.get("/:token",
 
         let { id, registrationTimestamp } = tokenData;
 
-        const query = { 
-            "account.registrationTimestamp": registrationTimestamp,
-            "_id": id
-        };
+        console.log(id, registrationTimestamp)
+
+        const query = { "_id": id };
         const user = await User.findOne(query).select("account");
+        console.log(user);
+
+        if (user === null) {
+            res.status(404).json({ error: "User does not exist" });
+        }
 
         if (user.account.confirmedEmail !== null) {
-            // if user already confirmed email;
             return res.status(400).json({ message: "Email is already verified" });
         }
+        
         // confirm email
         user.account.confirmedEmail = user.account.email;
 
