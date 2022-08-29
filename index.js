@@ -60,7 +60,7 @@ app.use("/api", authorize, v1);
 // MONGOOSE INIT
 let mongoURI;
 if (NODE_ENV === "production") {
-    mongoURI = process.env.MONGO_URI;
+    mongoURI = `mongodb+srv://apdo:${process.env.MONGO_PASS}@cluster0.cfhemkl.mongodb.net/?retryWrites=true&w=majority`;
 }
 else {
     mongoURI = "mongodb://127.0.0.1:27017/todo";

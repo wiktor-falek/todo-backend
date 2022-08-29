@@ -21,7 +21,7 @@ router.get("/todo",
     }
 
     const todos = user.todos;
-    res.json({ todos });
+    res.json(todos);
 });
 
 // Responds with an todo of the user that matches the id
@@ -38,12 +38,12 @@ router.get("/todo/:id",
 
         const user = await User.findOne(query).select("todos");
 
-        const result = user.todos.filter(todo => todo.id === id);
+        const result = user.todos.filter(todo => todo.id === id)[0];
 
         if (result.length === 0) {
             return res.status(400).json({ error: "todo not found" });
         }
-        res.json({ result });
+        res.json( result );
 });
 
 /**

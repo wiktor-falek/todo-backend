@@ -4,7 +4,7 @@
 ## POST `todobackend.com/auth/login`
 Authenticates an user, creates sessionId and sets a 
 cookie with sessionId and username
-### Fields 
+### Body 
 ```
 username: string
 password: string
@@ -14,11 +14,11 @@ password: string
 
 ## POST `todobackend.com/auth/register`
 Creates an user if username is available, and specified email is not already verified
-### Fields
+### Body
 ```
-username:string
-password:string
-email:string
+username: string
+password: string
+email: string
 ```
 
 <br>
@@ -31,11 +31,11 @@ This url is sent as in an confirmation email, confirms email when requested
 
 ## POST `todobackend.com/api/v1/todo`
 Creates a new todo for an user
-### Fields
+### Body
 ```
+id: string
 title: string
 body: string
-id: string
 timestamp: number
 ```
 
@@ -49,54 +49,58 @@ Responds with an array of all todos of the user
 ## GET `todobackend.com/api/v1/todo/:id`
 Responds with an todo of the user at specified id
 
+### Query
+```
+id: string
+```
+
 <br>
 
 ## POST `todobackend.com/api/v1/todo`
 Creates a new todo
-### Fields 
+### Body 
 ```
+id: string
 title: string
 body: string
-id: string
 timestamp: number
 ```
 
 <br>
 
-## PUT `todobackend.com/api/v1/todo/:id`
+## PUT `todobackend.com/api/v1/todo`
 Replaces a todo at id
-### Fields
+### Body
 ```
+id: string
 title: string
 body: string
-id: string
 timestamp: number
-```
-
-<br>
-
-## PATCH `todobackend.com/api/v1/todo/:id`
-Modifies a todo at id
-### Fields 
-```
-id: string
-fields: { 
-    // one or more
-    title: string
-    body: string
-    
-    }
 ```
 
 <br>
 
 ## DELETE `todobackend.com/api/v1/todo/:id`
 Deletes a todo at id
-### Fields 
+### Query 
 ```
 id: string
 ```
 
+<br>
+
+## PATCH `todobackend.com/api/v1/todo/:id`
+~~Modifies a todo at id~~ NOT IMPLEMENTED
+### Body 
+```
+{ 
+    // one or more
+    title: string
+    body: string
+}   
+```
+
+<br>
 
 
 # Getting started
