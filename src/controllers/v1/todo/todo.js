@@ -32,13 +32,18 @@ router.get("/todo/:id",
             return res.status(40).json({ error: "id not specified" });
         }
 
-        const { sessionId, username } = req.cookies;
+        const { username, sessionId, userId } = res.locals;
 
-        const query = { "account.username" : username, };
+        const query = { "_id" : userId };
 
         const user = await User.findOne(query).select("todos");
 
-        const result = user.todos.filter(todo => todo.id === id)[0];
+        if (user === null || user === undefined) {
+            return res.status(400).json({ error: "what the fuck"} );
+        }
+
+        const result = user.todos.filter(todo => todo.id !== id)[0] || []; // TODO this should be a query but im clueless
+        console.log(result);
 
         if (result.length === 0) {
             return res.status(400).json({ error: "todo not found" });
