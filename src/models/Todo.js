@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const todoSchema = new mongoose.Schema({
     id: { // not _id cuz this shit doesn't even work properly
         type: String,
-        unique: true,
         required: true,
     },
     title: {

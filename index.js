@@ -74,7 +74,16 @@ else {
     app.use("/", express.static(makeDir("/views/public"), { extensions: ["html", "css", "js", "ico"] }));
 }
 
-mongoose.connect(mongoURI);
+mongoose
+    .connect(mongoURI, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        autoIndex: true,
+    })
+    .then(() => {
+        console.log('connected to mongoDB');
+    });
+
 
 
 // SERVER

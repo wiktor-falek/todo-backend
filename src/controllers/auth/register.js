@@ -44,13 +44,15 @@ router.post("/register",
             }
         });
 
+        console.log(JSON.stringify(newUser));
+
         try {
             await newUser.save()
         }
-        catch {
+        catch(e) {
             return res.status(400).json({
                 param: "username",
-                message: "Username is taken"
+                message: "Username is taken",
             });
         }
 
