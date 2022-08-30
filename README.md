@@ -1,7 +1,7 @@
 # Auth
 
 
-## POST `todobackend.com/auth/login`
+## POST `https://todoapi-dfk7.onrender.com/auth/login`
 Authenticates an user, creates sessionId and sets a 
 cookie with sessionId and username
 ### Body 
@@ -12,7 +12,7 @@ password: string
 
 <br>
 
-## POST `todobackend.com/auth/register`
+## POST `https://todoapi-dfk7.onrender.com/auth/register`
 Creates an user if username is available, and specified email is not already verified
 ### Body
 ```
@@ -23,13 +23,13 @@ email: string
 
 <br>
 
-## GET `todobackend.com/auth/verify/:token`
+## GET `https://todoapi-dfk7.onrender.com/auth/verify/:token`
 This url is sent as in an confirmation email, confirms email when requested
 
 # API v1
 
 
-## POST `todobackend.com/api/v1/todo`
+## POST `https://todoapi-dfk7.onrender.com/api/v1/todo`
 Creates a new todo for an user
 ### Body
 ```
@@ -41,12 +41,12 @@ timestamp: number
 
 <br>
 
-## GET `todobackend.com/api/v1/todo`
+## GET `https://todoapi-dfk7.onrender.com/api/v1/todo`
 Responds with an array of all todos of the user
 
 <br>
 
-## GET `todobackend.com/api/v1/todo/:id`
+## GET `https://todoapi-dfk7.onrender.com/api/v1/todo/:id`
 Responds with an todo of the user at specified id
 
 ### Query
@@ -56,7 +56,7 @@ id: string
 
 <br>
 
-## POST `todobackend.com/api/v1/todo`
+## POST `https://todoapi-dfk7.onrender.com/api/v1/todo`
 Creates a new todo
 ### Body 
 ```
@@ -68,7 +68,7 @@ timestamp: number
 
 <br>
 
-## PUT `todobackend.com/api/v1/todo`
+## PUT `https://todoapi-dfk7.onrender.com/api/v1/todo`
 Replaces a todo at id
 ### Body
 ```
@@ -80,7 +80,7 @@ timestamp: number
 
 <br>
 
-## DELETE `todobackend.com/api/v1/todo/:id`
+## DELETE `https://todoapi-dfk7.onrender.com/api/v1/todo/:id`
 Deletes a todo at id
 ### Query 
 ```
@@ -89,7 +89,7 @@ id: string
 
 <br>
 
-## PATCH `todobackend.com/api/v1/todo/:id`
+## PATCH `https://todoapi-dfk7.onrender.com/api/v1/todo/:id`
 ~~Modifies a todo at id~~ NOT IMPLEMENTED
 ### Body 
 ```
@@ -110,4 +110,3 @@ id: string
 1. `cp .env.example .env`
 
 1. create a secret in .env
-
