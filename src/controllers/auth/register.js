@@ -68,7 +68,7 @@ router.post("/register",
             email,
             'Please confirm your email address',
             `Hi ${username}, Click here to confirm your email address and activate your account\n` +
-            `http://localhost:3000/auth/verify/${token}` 
+            `https://todoapi-dfk7.onrender.com/auth/verify/${token}` 
         );
 
         res.status(200).json({ username, email });
