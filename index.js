@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import winston from "winston";
 import expressWinston, { logger } from "express-winston";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import { default as register } from "./src/controllers/auth/register.js"
 import { default as login } from "./src/controllers/auth/login.js"
@@ -19,6 +20,10 @@ const NODE_ENV = process.env.NODE_ENV === "production"? "production" : "developm
 
 
 // MIDDLEWARE
+app.use(cors({
+    origin: "*",
+    optionsSuccessStatus: 200
+}));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
